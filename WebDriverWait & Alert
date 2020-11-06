@@ -1,0 +1,45 @@
+/**
+	 * Generic method for explicit wait. WebDriverWait by default calls the
+	 * ExpectedCondition every 500 milliseconds until it returns successfully.
+	 * 
+	 * @param element the WebElement passed in by the user
+	 */
+	public WebElement explicitWait(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		return wait.until(ExpectedConditions.visibilityOf(element));
+	}
+
+
+
+/**
+	 * Generic method for mouse hover action. 
+	 * 
+	 * @param element the WebElement passed in by the user
+	 */
+	public void mouseHover(WebElement element) {
+		Actions act = new Actions(driver);
+		act.moveToElement(this.explicitWait(element)).build().perform();
+	}
+	
+	/** Generic method allow user to accept alert */
+	public void acceptAlert() {
+		driver.switchTo().alert().accept();
+	}
+	
+	/** Generic method allow user to dismiss alert */
+	public void dismissAlert() {
+		driver.switchTo().alert().dismiss();
+	}
+
+//WebDriverWait and Alert method
+try {
+						WebDriverWait wait = new WebDriverWait(driver,20);
+						wait.until(ExpectedConditions.alertIsPresent());
+						
+						Alert alrt = driver.switchTo().alert();
+						System.out.println("Alert box text= "+alrt.getText());
+						alrt.accept();
+					}catch(NoAlertPresentException noAlert) {
+						noAlert.getMessage();
+						
+					}
