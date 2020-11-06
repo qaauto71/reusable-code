@@ -1,0 +1,42 @@
+/**
+	 * This method counts total number of note titles found matching specific word in Search box
+	 * @param driver
+	 * @param noteTitle
+	 * @return an integer value counting number of note items found
+	 * @throws InterruptedException
+	 */
+	public String noteTitleCount(WebDriver driver, String noteTitle) {
+
+		List<WebElement> list= driver.findElements(By.xpath("//div[@class='note-row']"));
+		int countNotes=0;
+		
+		for(int i=0; i<list.size(); i++) {
+
+			if(list.get(i).getText().contains(noteTitle)) {
+				countNotes++;
+			}
+		}
+		//return Integer.toString(countNotes);
+		return String.valueOf(countNotes);
+
+	}
+
+
+/**
+	 * This method counts total number of all the note titles 
+	 * @param driver
+	 * @return a string value counting total number of notes
+	 */
+	public String allNoteTitleCount(WebDriver driver) {
+
+		List<WebElement> list= driver.findElements(By.xpath("//div[@class='note-row']"));
+		int countNotes=0;
+		
+		for(int i=0; i<list.size(); i++) {
+				System.out.println(list.get(i).getText());
+				countNotes++;
+			}
+		//return Integer.toString(countNotes);
+		return String.valueOf(countNotes);
+	}
+	
