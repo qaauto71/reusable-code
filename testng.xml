@@ -1,0 +1,36 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="com.projectname.listeners.ExtentListener" />
+	</listeners>
+	<test thread-count="5" name="Test">
+		<parameter name="Browser" value="chrome" />
+		<parameter name="Env" value="QA" />
+		<parameter name="Automation Tester" value="Tester Name" /> 
+		<parameter name="qa_url"
+			value="https://www...com/" />
+		<parameter name="DriverDirectory"
+			value="C:\\Driver Directory\\chromedriver86\\" />
+		<parameter name="clearsessionqaurl"
+			value="https://www...com/logout.html?end_url=/webcenter/portal/public" />
+		<parameter name="clearsessiondevurl"
+			value="https://www...com/logout.html?end_url=/webcenter/portal/public" />
+		<parameter name="clearsessionuaturl"
+			value="https://www...com/logout.html?end_url=/webcenter/portal/public" />
+		<parameter name="Excel File Name"
+			value="C:\\FolderName\\Excel File Name.xls" />				
+					
+					
+		<!-- Test Data -->
+		
+		<classes>	
+			
+			<class
+				name="com.projectpackage.ClassName" />	
+				
+		</classes>
+		
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
