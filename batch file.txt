@@ -1,0 +1,49 @@
+REM *** END OF SCRIPT
+
+ECHO ON
+
+ECHO STARTING SCRIPT %DATE%
+REM *** ***********************
+REM *** SET dependency jar file location. Make sure all dependency jar files are located here,
+REM ***   so that classpath can be set easily instead of copying the location for every jar file
+
+SET LIB_HOME=C:\Test_Area\MGM_Foundational_Tests\Automation_lib
+REM *** SET UTIL_HOME=C:\Local Working Directory
+
+REM *** ***********************
+REM *** SET the automation jar file location, where the automation jar file located
+REM *** ***********************
+
+SET JAR_HOME=C:\Test_Area\Folder Name
+
+REM *** ***********************
+REM *** SET JDK home location
+REM *** ***********************
+
+SET JDK_HOME=C:\Program Files\Java\jdk1.8.0_261
+set path=%JDK_HOME%\bin;%path%;
+
+echo %path%
+
+REM *** set classpath=.;%JAR_HOME%\gnet_sf_testsuite.jar;%LIB_HOME%\extentreports-4.0.9.jar;%LIB_HOME%\activation-1.1.1.jar;%LIB_HOME%\bsh-2.0b4.jar;%LIB_HOME%\bson-3.3.0.jar;%LIB_HOME%\byte-buddy-1.7.9.jar;%LIB_HOME%\client-combined-3.9.1-sources.jar;%LIB_HOME%\client-combined-3.9.1.jar;%LIB_HOME%\com.beust.jcommander_1.72.0.jar;%LIB_HOME%\commons-codec-1.10.jar;%LIB_HOME%\commons-codec-1.12.jar;%LIB_HOME%\commons-codec-1.9.jar;%LIB_HOME%\commons-collections4-4.3.jar;%LIB_HOME%\commons-compress-1.18.jar;%LIB_HOME%\commons-exec-1.3.jar;%LIB_HOME%\commons-io-2.4.jar;%LIB_HOME%\commons-io-2.6.jar;%LIB_HOME%\commons-logging-1.2.jar;%LIB_HOME%\commons-math3-3.6.1.jar;%LIB_HOME%\curvesapi-1.06.jar;%LIB_HOME%\freemarker-2.3.23.jar;%LIB_HOME%\gson-2.8.2.jar;%LIB_HOME%\gson-2.8.5.jar;%LIB_HOME%\guava-23.6-jre.jar;%LIB_HOME%\httpclient-4.5.2.jar;%LIB_HOME%\httpclient-4.5.3.jar;%LIB_HOME%\httpcore-4.4.4.jar;%LIB_HOME%\httpcore-4.4.6.jar;%LIB_HOME%\httpmime-4.5.2.jar;%LIB_HOME%\jaxb-api-2.3.0.jar;%LIB_HOME%\jaxb-core-2.
+REM ***3.0.1.jar;%LIB_HOME%\jaxb-impl-2.3.0.1.jar;%LIB_HOME%\jcommander-1.48.jar;%LIB_HOME%\junit-4.12.jar;%LIB_HOME%\log4j-1.2.17.jar;%LIB_HOME%\mongodb-driver-3.3.0.jar;%LIB_HOME%\mongodb-driver-core-3.3.0.jar;%LIB_HOME%\okhttp-3.9.1.jar;%LIB_HOME%\okio-1.13.0.jar;%LIB_HOME%\org.apache-extras.beanshell.bsh_2.0.0.b6.jar;%LIB_HOME%\org.testng_6.14.3.r201802240500.jar;%LIB_HOME%\org.yaml.snakeyaml_1.17.0.jar;%LIB_HOME%\poi-4.1.0.jar;%LIB_HOME%\poi-examples-4.1.0.jar;%LIB_HOME%\poi-excelant-4.1.0.jar;%LIB_HOME%\poi-ooxml-4.1.0.jar;%LIB_HOME%\poi-ooxml-schemas-4.1.0.jar;%LIB_HOME%\poi-scratchpad-4.1.0.jar;%LIB_HOME%\sikulixapi.jar;%LIB_HOME%\testng-6.9.10.jar;%LIB_HOME%\xmlbeans-3.1.0.jar;%LIB_HOME%\Utilities.jar;%LIB_HOME%\Utilities_v2;\pdfbox-2.0.17.jar;%LIB_HOME%\fontbox-2.0.17.jar;%classpath%;
+
+REM *** set classpath=.;%JAR_HOME%\TestSuiteName.jar;%LIB_HOME%\extentreports-4.0.9.jar;%LIB_HOME%\activation-1.1.1.jar;%LIB_HOME%\bsh-2.0b4.jar;%LIB_HOME%\bson-3.3.0.jar;%LIB_HOME%\byte-buddy-1.7.9.jar;%LIB_HOME%\client-combined-3.9.1-sources.jar;%LIB_HOME%\client-combined-3.9.1.jar;%LIB_HOME%\com.beust.jcommander_1.72.0.jar;%LIB_HOME%\commons-codec-1.10.jar;%LIB_HOME%\commons-codec-1.12.jar;%LIB_HOME%\commons-codec-1.9.jar;%LIB_HOME%\commons-collections4-4.3.jar;%LIB_HOME%\commons-compress-1.18.jar;%LIB_HOME%\commons-exec-1.3.jar;%LIB_HOME%\commons-io-2.4.jar;%LIB_HOME%\commons-io-2.6.jar;%LIB_HOME%\commons-logging-1.2.jar;%LIB_HOME%\commons-math3-3.6.1.jar;%LIB_HOME%\curvesapi-1.06.jar;%LIB_HOME%\freemarker-2.3.23.jar;%LIB_HOME%\gson-2.8.2.jar;%LIB_HOME%\gson-2.8.5.jar;%LIB_HOME%\guava-23.6-jre.jar;%LIB_HOME%\httpclient-4.5.2.jar;%LIB_HOME%\httpclient-4.5.3.jar;%LIB_HOME%\httpcore-4.4.4.jar;%LIB_HOME%\httpcore-4.4.6.jar;%LIB_HOME%\httpmime-4.5.2.jar;%LIB_HOME%\jaxb-api-2.3.0.jar;%LIB_HOME%\
+REM ***jaxb-core-2.3.0.1.jar;%LIB_HOME%\jaxb-impl-2.3.0.1.jar;%LIB_HOME%\jcommander-1.48.jar;%LIB_HOME%\junit-4.12.jar;%LIB_HOME%\log4j-1.2.17.jar;%LIB_HOME%\mongodb-driver-3.3.0.jar;%LIB_HOME%\mongodb-driver-core-3.3.0.jar;%LIB_HOME%\okhttp-3.9.1.jar;%LIB_HOME%\okio-1.13.0.jar;%LIB_HOME%\org.apache-extras.beanshell.bsh_2.0.0.b6.jar;%LIB_HOME%\org.testng_6.14.3.r201802240500.jar;%LIB_HOME%\org.yaml.snakeyaml_1.17.0.jar;%LIB_HOME%\poi-4.1.0.jar;%LIB_HOME%\poi-examples-4.1.0.jar;%LIB_HOME%\poi-excelant-4.1.0.jar;%LIB_HOME%\poi-ooxml-4.1.0.jar;%LIB_HOME%\poi-ooxml-schemas-4.1.0.jar;%LIB_HOME%\poi-scratchpad-4.1.0.jar;%LIB_HOME%\sikulixapi.jar;%LIB_HOME%\testng-6.9.10.jar;%LIB_HOME%\xmlbeans-3.1.0.jar;%LIB_HOME%\pdfbox-2.0.17.jar;%LIB_HOME%\fontbox-2.0.17.jar;%LIB_HOME%\Utilities_V3.jar;%classpath%;
+
+set classpath=.;%JAR_HOME%\Jar File Containing exported Java classes.jar;%LIB_HOME%\activation-1.1.1.jar;%LIB_HOME%\bsh-2.0b4.jar;%LIB_HOME%\bson-3.3.0.jar;%LIB_HOME%\byte-buddy-1.7.9.jar;%LIB_HOME%\client-combined-3.9.1.jar;%LIB_HOME%\client-combined-3.9.1-sources.jar;%LIB_HOME%\com.beust.jcommander_1.72.0.jar;%LIB_HOME%\commons-codec-1.9.jar;%LIB_HOME%\commons-codec-1.10.jar;%LIB_HOME%\commons-codec-1.12.jar;%LIB_HOME%\commons-collections4-4.3.jar;%LIB_HOME%\commons-compress-1.18.jar;%LIB_HOME%\commons-exec-1.3.jar;%LIB_HOME%\commons-io-2.4.jar;%LIB_HOME%\commons-io-2.6.jar;%LIB_HOME%\commons-logging-1.2.jar;%LIB_HOME%\commons-math3-3.6.1.jar;%LIB_HOME%\curvesapi-1.06.jar;%LIB_HOME%\extentreports-4.0.9.jar;%LIB_HOME%\fontbox-2.0.17.jar;%LIB_HOME%\freemarker-2.3.23.jar;%LIB_HOME%\gson-2.8.2.jar;%LIB_HOME%\gson-2.8.5.jar;%LIB_HOME%\guava-23.6-jre.jar;%LIB_HOME%\httpclient-4.5.2.jar;%LIB_HOME%\httpclient-4.5.3.jar;%LIB_HOME%\httpcore-4.4.4.jar;%LIB_HOME%\httpcore-4.4.6.jar;%LIB_HOME%\httpmime-4.5.2.jar;%LIB_HOME%\jaxb-api-2.3.0.jar;%LIB_HOME%\jaxb-core-2.3.0.1.jar;%LIB_HOME%\jaxb-impl-2.3.0.1.jar;%LIB_HOME%\jcommander-1.48.jar;%LIB_HOME%\junit-4.12.jar;%LIB_HOME%\log4j-1.2.17.jar;%LIB_HOME%\mongodb-driver-3.3.0.jar;%LIB_HOME%\mongodb-driver-core-3.3.0.jar;%LIB_HOME%\okhttp-3.9.1.jar;%LIB_HOME%\okio-1.13.0.jar;%LIB_HOME%\org.apache-extras.beanshell.bsh_2.0.0.b6.jar;%LIB_HOME%\org.testng_6.14.3.r201802240500.jar;%LIB_HOME%\org.yaml.snakeyaml_1.17.0.jar;%LIB_HOME%\pdfbox-2.0.17.jar;%LIB_HOME%\poi-4.1.0.jar;%LIB_HOME%\poi-examples-4.1.0.jar;%LIB_HOME%\poi-excelant-4.1.0.jar;%LIB_HOME%\poi-ooxml-4.1.0.jar;%LIB_HOME%\poi-ooxml-schemas-4.1.0.jar;%LIB_HOME%\poi-scratchpad-4.1.0.jar;%LIB_HOME%\sikulixapi.jar;%LIB_HOME%\testng-6.9.10.jar;%LIB_HOME%\Utilities_V6.jar;%LIB_HOME%\xmlbeans-3.1.0.jar;%LIB_HOME%\mgm_common.jar;%classpath%;
+
+echo %classpath%
+
+REM *** ***********************
+REM *** Call the tensg class with the xml file
+REM ***  Make sure the xml file is upto date with the location references etc.
+REM *** ***********************
+
+java org.testng.TestNG testng.xml
+PAUSE
+
+
+ECHO ENDING SCRIPT %DATE%
+
+REM *** END OF SCRIPT
