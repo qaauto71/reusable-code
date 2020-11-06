@@ -1,0 +1,57 @@
+// How to get Current date
+
+public String getCurrentDate() {
+		
+		// Create object of SimpleDateFormat class and decide the format
+		 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+		
+		 //get current date time with Date()
+		 Date date = new Date(); 
+		
+		 // Now format the date
+		 String currentDate= dateFormat.format(date);
+		 
+		 return currentDate;
+		
+	}
+  
+  //-------------------------------------------------------
+  
+  //Comparing dates
+  
+//Approach-1 : Using Date.before(), Date.after() and Date.equals()
+
+if(date1.after(date2)){
+                System.out.println("Date1 is after Date2");
+            }
+if(date1.before(date2)){
+                System.out.println("Date1 is before Date2");
+            }
+if(date1.equals(date2)){
+                System.out.println("Date1 is equal Date2");
+            }
+            
+//Approach-2 : Date.compareTo()
+           if(date1.compareTo(date2)>0){
+                System.out.println("Date1 is after Date2");
+            }else if(date1.compareTo(date2)<0){
+                System.out.println("Date1 is before Date2");
+            }else{
+                System.out.println("Date1 is equal to Date2");
+            }
+            
+//Approach-3 : Calender.before(), Calender.after() and Calender.equals()
+Calendar cal1 = Calendar.getInstance();
+            Calendar cal2 = Calendar.getInstance();
+            cal1.setTime(date1);
+            cal2.setTime(date2);
+if(cal1.after(cal2)){
+                System.out.println("Date1 is after Date2");
+            }
+if(cal1.before(cal2)){
+                System.out.println("Date1 is before Date2");
+            }
+if(cal1.equals(cal2)){
+                System.out.println("Date1 is equal Date2");
+            }
+
