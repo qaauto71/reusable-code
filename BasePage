@@ -1,0 +1,619 @@
+public class BasePage {
+
+	// Local WebDriver variable
+	WebDriver driver;
+  
+@FindBy(xpath = "//*[contains(. ,'')]")
+private WebElement loadingIndicator;
+
+	// ********* Constructor *********//
+
+	public BasePage(WebDriver newDriver) {
+		PageFactory.initElements(newDriver, this);
+		driver = newDriver;
+	}
+
+	// ********* Page Methods *********//
+
+	// Verify Page Elements
+
+	/**
+	 * This method verifies that the 'My Dashboard' tab is visible on-screen.
+	 * 
+	 * @return returns a boolean value indicating whether or not the 'My Dashboard'
+	 *         tab was displayed on-screen.
+	 */
+	public boolean myDashboardIsVisible() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		// Wait for element to be displayed.
+		WebElement dashboard = wait.until(ExpectedConditions.visibilityOf(myDashboardTab));
+		Log.info("Instantiating web element for dashboard.");
+		// Verify visibility of the web element.
+		if (dashboard.isDisplayed()) {
+			Log.info("Verify the dashboard is displayed.");
+		} else {
+			Log.info("Verify the dashboard is not displayed.");
+		}
+		return dashboard.isDisplayed();
+	}
+
+	/**
+	 * This method verifies that the 'Finance' tab is visible on-screen.
+	 * 
+	 * @return returns a boolean value indicating whether or not the 'Finance' tab
+	 *         was displayed on-screen.
+	 */
+	public boolean verifyFinanceTabIsVisible() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		// Wait for element to be displayed.
+		WebElement finance = wait.until(ExpectedConditions.visibilityOf(financeTab));
+		// Verify visibility of the web element.
+		return finance.isDisplayed();
+	}
+
+	/**
+	 * This method verifies that the 'Platinum Processing' tab is visible on-screen.
+	 * 
+	 * @return returns a boolean value indicating whether or not the 'Platinum
+	 *         Processing' tab was displayed on-screen.
+	 */
+	public boolean verifyPlatinumProcessingIsVisible() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		// Wait for element to be displayed.
+		WebElement platinumProcessing = wait.until(ExpectedConditions.visibilityOf(platinumProcessingTab));
+		// Verify visibility of the web element.
+		return platinumProcessing.isDisplayed();
+	}
+
+	/**
+	 * This method verifies that the 'Pools & Loans' tab is visible on-screen.
+	 * 
+	 * @return returns a boolean value indicating whether or not the 'Pools & Loans'
+	 *         tab was displayed on-screen.
+	 */
+	public boolean verifyPoolsAndLoansTabIsVisible() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		// Wait for element to be displayed.
+		WebElement poolsLoansTab = wait.until(ExpectedConditions.visibilityOf(poolsAndLoansTab));
+		// Verify visibility of the web element.
+		return poolsLoansTab.isDisplayed();
+	}
+
+	/**
+	 * This method verifies that the 'Tools' link is visible on-screen.
+	 * 
+	 * @return returns a boolean value indicating whether or not the 'Tools' tab was
+	 *         displayed on-screen.
+	 */
+	public boolean verifyCommunitiesLinkIsDisplayed() {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		// Wait for element to be displayed.
+		WebElement tools = wait.until(ExpectedConditions.visibilityOf(toolsLink));
+		// Verify visibility of the web element.
+		return tools.isDisplayed();
+	}
+
+	/**
+	 * This method verifies that the 'Tools' tab is visible on-screen.
+	 * 
+	 * @return returns a boolean value indicating whether or not the 'Tools' link
+	 *         was displayed on-screen.
+	 */
+	public boolean verifyTheToolsLinkIsDisplayed() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement tools = wait.until(ExpectedConditions.visibilityOf(toolsLink));
+		// Verify visibility of the web element.
+		return tools.isDisplayed();
+	}
+
+	// Page Methods - User Interactions
+
+	public void clickOnMyDashboard() {
+		// myDashboardTab.click();
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement dashboard = wait.until(ExpectedConditions.visibilityOf(myDashboardTab));
+		// Click on the element.
+		dashboard.click();
+		Log.info("Clicked on Dashboard header");
+	}
+
+	public void clickOnSFPDMPoolsAndLoans() {
+		sfpdmPoolsAndLoansTab.click();
+	}
+
+	/**
+	 * This method allow user to click on Pools and Loans menu tab on 'MFPDM' page
+	 * 
+	 */
+
+	public boolean clickOnPoolsAndLoans() {
+		WebDriverWait wait = new WebDriverWait(driver, 60);
+		// Wait for element to be displayed.
+		WebElement poolsLoansTab = wait.until(ExpectedConditions.elementToBeClickable(poolsAndLoansTab));
+		// Click on the element.
+		// poolsAndLoansTab.click();
+		// poolsLoansTab.click();
+		 boolean result = false;
+		    int attempts = 0;
+		    while(attempts < 2) {
+		        try {
+		        	JavascriptExecutor jse = (JavascriptExecutor)driver;
+		    		jse.executeScript("arguments[0].click()", poolsLoansTab);
+		        	//poolsLoansTab.click();
+		            result = true;
+		            break;
+		        } catch(StaleElementReferenceException e) {
+		        }
+		        attempts++;
+		    }	
+		return result;
+	}
+
+	public void clickOnPlatinumProcessing() {
+		// platinumProcessingTab.click();
+		WebDriverWait wait = new WebDriverWait(driver, 50);
+		// Wait for element to be displayed.
+		WebElement platinumProcessing = wait.until(ExpectedConditions.visibilityOf(platinumProcessingTab));
+		// Click on the element.
+		platinumProcessing.click();
+	}
+
+	public void clickOnSFPDMMaintenance() {
+		this.clickOnAnElement(sfpdmMaintenanceTab);
+	}
+
+	/**
+	 * This method allow user to click on Maintenance menu tab on 'MFPDM' page
+	 * 
+	 */
+	public void clickOnMaintenance() {
+		this.clickOnAnElement(maintenanceTab);
+	}
+
+	public void clickOnValidationTool() {
+		this.clickOnAnElement(validationToolTab);
+	}
+
+	public void clickOnTheFinanceTab() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement finance = wait.until(ExpectedConditions.visibilityOf(financeTab));
+		// Click on the element.
+		finance.click();
+	}
+
+	public void clickOnTheToolsLink() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement tools = wait.until(ExpectedConditions.visibilityOf(toolsLink));
+		// Click on the element.
+		tools.click();
+	}
+
+	/**
+	 * Clicks on the pool "Commitment Management" link is displayed on the 'Tools'
+	 * menu.
+	 */
+	public void clickOnTheCommitmentManagementLink() {
+		this.clickOnAnElement(commitmentManagementLink);
+	}
+
+	/**
+	 * Clicks on the pool "Health Check" link is displayed on the 'Tools' menu.
+	 */
+	public void clickOnTheHealthCheckLink() {
+		this.clickOnAnElement(healthCheckLink);
+	}
+
+	public void clickOnTheLetterOfCreditLink() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement locLink = wait.until(ExpectedConditions.visibilityOf(letterOfCreditLink));
+		// Click on the element.
+		locLink.click();
+	}
+
+	public void clickOnTheCorrectionsHelpdeskLink() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement correctionsLink = wait.until(ExpectedConditions.visibilityOf(correctionsHelpdeskLink));
+		// Click on the element.
+		correctionsLink.click();
+	}
+
+	// Page Methods - Page Actions
+
+	/**
+	 * This method is a generic method that allows users select an item from a
+	 * picklist.
+	 * 
+	 * @param picklist the WebElement for the picklist
+	 * @param menuItem the item from the menu that is being selected by the user
+	 */
+	public void selectFromMenu(WebElement picklist, String menuItem) {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement pickList = wait.until(ExpectedConditions.visibilityOf(picklist));
+		// Select value from the menu.
+		Select selectMenu = new Select(pickList);
+		selectMenu.selectByVisibleText(menuItem);
+	}
+
+	/**
+	 * This method is a generic method that allows users set a value on a field.
+	 * 
+	 * @param fieldElement the WebElement for the input field
+	 * @param userVal      the value that is being set by the user in the field
+	 */
+	public void setValueInField(WebElement fieldElement, String userVal) {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement inputField = wait.until(ExpectedConditions.visibilityOf(fieldElement));
+		// Set the value in the designated field.
+		inputField.click();
+		inputField.sendKeys(userVal);
+	}
+
+	/**
+	 * This method is a generic method that allows users to verify that a WebElement
+	 * is displayed on-screen.
+	 * 
+	 * @param element the WebElement passed in by the user.
+	 * @return boolean value that indicates whether or not the WebElement was
+	 *         displayed on-screen.
+	 */
+	public boolean verifyTheWebElementIsDisplayed(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement inspectedElement = wait.until(ExpectedConditions.visibilityOf(element));
+		// Verify the WebElement was displayed on-screen.
+		return inspectedElement.isDisplayed();
+	}
+
+	/**
+	 * This method is a generic method that allows users click on a WebElement.
+	 * 
+	 * @param element the WebElement passed in by the user.
+	 */
+	public void clickOnAnElement(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement specifiedElement = wait.until(ExpectedConditions.visibilityOf(element));
+		// Click on the WebElement.
+		specifiedElement.click();
+	}
+
+	/**
+	 * This method is a generic method that allows users to retrieve the text from a
+	 * WebElement.
+	 * 
+	 * @param element the WebElement passed in by the user.
+	 * @return return the text from the WebElement
+	 */
+	public String getTextFromWebElement(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement specifiedElement = wait.until(ExpectedConditions.visibilityOf(element));
+		// Get the text of the WebElement.
+		return specifiedElement.getText();
+	}
+
+	/**
+	 * This method is a generic method that allows users to retrieve the value from
+	 * a WebElement.
+	 * 
+	 * @param element the WebElement passed in by the user.
+	 * @return return the value from the WebElement
+	 */
+	public String getValueFromWebElement(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement specifiedElement = wait.until(ExpectedConditions.visibilityOf(element));
+		// Get the value of the WebElement.
+		return specifiedElement.getAttribute("value");
+	}
+
+	/**
+	 * public void clickOnPoolsAndLoans() { poolsAndLoansTab.click(); }
+	 * 
+	 * public void clickOnMaintenance() { maintenanceTab.click(); }
+	 */
+
+	public void clickOnReports() {
+		this.clickOnAnElement(reportsTab);
+	}
+
+	// Search Functions
+
+	public void clickOnSearchIcon() {
+		this.clickOnAnElement(searchIcon);
+	}
+
+	public void clickOnSearchInputField() {
+		this.clickOnAnElement(searchInput);
+	}
+
+	public void clickGo() {
+		goButton.click();
+	}
+
+	public void enterSearchCriteria(String searchItem) {
+		this.explicitWait(searchInput).sendKeys(searchItem);
+	}
+
+	// Collapsed Menu Items
+
+	public void clickOnTheHamburgerMenu() {
+		itemHamburgerMenu.click();
+	}
+
+	// Logout Container Elements
+
+	public void clickOnLogOutContainer() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement containerLogo = wait.until(ExpectedConditions.visibilityOf(logOutContainer));
+		// Click on the element.
+		containerLogo.click();
+	}
+
+	public void clickOnExtendSessionButton() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement extendBttn = wait.until(ExpectedConditions.visibilityOf(extendButton));
+		// Click on the element.
+		extendBttn.click();
+	}
+
+	public void clickOnLogOutButton() {
+		WebDriverWait wait = new WebDriverWait(driver, 45);
+		// Wait for element to be displayed.
+		WebElement logoutBttn = wait.until(ExpectedConditions.visibilityOf(logOutButton));
+		// Click on the element.
+		logoutBttn.click();
+	}
+
+	// Logout of the application
+	public void logOutOfApplication() {
+		try {
+			this.clickOnLogOutContainer();
+			this.clickOnLogOutButton();
+			driver.switchTo().alert().accept();
+		} catch (Exception e) {
+			System.out.println("alert not displayed");
+		}
+	}
+
+	// Author: Raiyan Rahman
+	// This method was added to this page class on 06/17/2019.
+
+	public void refreshPage(WebDriver driver) {
+		driver.navigate().refresh();
+	}
+
+	// Page Methods - Verification
+
+	public boolean sfpdmFunctionalityIsVisible() {
+		boolean dashboardIsVisible = myDashboardTab.isDisplayed();
+		boolean sfpdmPoolsAndLoansTabIsVisible = sfpdmPoolsAndLoansTab.isDisplayed();
+		boolean sfpdmMaintenanceTabIsVisible = sfpdmMaintenanceTab.isDisplayed();
+		boolean validationToolTabIsVisible = validationToolTab.isDisplayed();
+		// boolean poolsAndLoansTabIsVisible = poolsAndLoansTab.isDisplayed();
+		// boolean maintenanceTabIsVisible = maintenanceTab.isDisplayed();
+		boolean reportsTabIsVisible = reportsTab.isDisplayed();
+		if ((dashboardIsVisible && sfpdmPoolsAndLoansTabIsVisible && sfpdmMaintenanceTabIsVisible
+				&& validationToolTabIsVisible && reportsTabIsVisible) == true) {
+			System.out.println("The following tabs are visible: \n" + myDashboardTab.getText() + "\n"
+					+ sfpdmPoolsAndLoansTab.getText() + "\n" + sfpdmMaintenanceTab.getText() + "\n"
+					+ validationToolTab.getText() + "\n" + reportsTab.getText() + "\n");
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public String getPageTitle() {
+		return this.getPageTitle();
+	}
+
+	/**
+	 * Generic method for explicit wait. WebDriverWait by default calls the
+	 * ExpectedCondition every 500 milliseconds until it returns successfully.
+	 * 
+	 * @param element the WebElement passed in by the user
+	 */
+	public WebElement explicitWait(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 75);
+		return wait.until(ExpectedConditions.visibilityOf(element));
+	}
+
+	/**
+	 * This method allow user to get filename of recently downloaded file.
+	 * 
+	 * @return return String filename value of recently downloaded file.
+	 * @param dirPath : Directory Path
+	 */
+
+	public String getLatestDownlodedFilefromDir(String dirPath) {
+		File dir = new File(dirPath); // Initializing file variable
+		File[] files = dir.listFiles(); // file array having all files
+		if (files == null || files.length == 0) {
+			return null;
+		}
+		// Initializing lastDownlodedFile variable
+		File lastDownlodedFile = files[0];
+		for (int i = 1; i < files.length; i++) {
+			if (lastDownlodedFile.lastModified() < files[i].lastModified()) {
+				lastDownlodedFile = files[i];
+			}
+		}
+		return lastDownlodedFile.getName();
+	}
+
+	/**
+	 * This method allow user to read PDF contents from specific file location
+	 * 
+	 * @return String value of PDF text.
+	 * @param fileLocation : Complete File Path
+	 */
+	public String ReadPDF(String fileLocation) throws Exception {
+		File file = new File(fileLocation);
+		PDDocument document = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		// pdfStripper.setStartPage(1);
+		// pdfStripper.setEndPage(1);
+		String text = pdfStripper.getText(document);
+		return text;
+	}
+
+	// open report
+	public void downloadAndOpenReport() throws InterruptedException, IOException {
+		String angleButtonImg = GetReportDownloadImages.getAngularBtnFile();
+		String openDownloadButtonImg = GetReportDownloadImages.getOpenDownloadButtonImgFile();
+		String parentTab = driver.getWindowHandle();
+		Thread.sleep(2000);
+
+		// Open the PDF file.
+		Screen screen = new Screen();
+
+		Pattern angleButton = new Pattern(angleButtonImg);
+		Pattern openDownload = new Pattern(openDownloadButtonImg);
+
+		try {
+			screen.click(angleButton);
+		} catch (FindFailed e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Thread.sleep(4000);
+
+		try {
+			screen.click(openDownload);
+		} catch (FindFailed e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Thread.sleep(2000);
+		// User switch to child tab
+		for (String handle : driver.getWindowHandles()) {
+			if (!parentTab.equals(handle)) {
+				driver.switchTo().window(handle);
+				Thread.sleep(6000);
+				try {
+					GetScreenshot.addStepWithScreenshot(driver, "Open downloaded report");
+				} catch (IOException e) {
+					GetScreenshot.addFailureStepWithScreenshot(driver, "Report is not opening");
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				screen.wheel(1, 8);
+				Thread.sleep(2000);
+				try {
+					GetScreenshot.addStepWithScreenshot(driver, "Report screenshot after page scroll down");
+				} catch (IOException e) {
+					GetScreenshot.addFailureStepWithScreenshot(driver, "Scrolling action failed");
+					e.printStackTrace();
+				}
+				Thread.sleep(2000);
+			}
+
+		}
+
+		// User switch back to parent tab
+		driver.switchTo().window(parentTab);
+		Thread.sleep(4000);
+		// driver.switchTo().defaultContent();
+	}
+
+	/**
+	 * This method allow user to scroll down the web page at the bottom of the page
+	 */
+	public void scrollByPage() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+	
+	/**
+	 * This method allow user to scroll up the web page 	 */
+	public void scrollPageUp() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,-350)", "");
+	}
+
+	/**
+	 * This method allow user to scroll page by visibility of element
+	 */
+	public void scrollByVisibleElement(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", element);
+	}
+
+	// File upload robot class
+	public void uploadFile(String filePath) throws AWTException {
+		Robot robot = new Robot();
+		robot.setAutoDelay(2000);
+
+		// copy content (Ctrl+C)
+		StringSelection stringselection = new StringSelection(filePath);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringselection, null);
+		robot.setAutoDelay(2000);
+
+		// Paste copied content (Ctrl+V)
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.setAutoDelay(2000);
+
+		// press and release enter button
+
+//  	robot.keyPress(KeyEvent.VK_TAB);
+//  	robot.keyPress(KeyEvent.VK_TAB);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		// robot.setAutoDelay(200);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+
+	}
+
+	// Page Reload ALert
+
+	public void acceptAlertReloadChanges() {
+		driver.switchTo().alert().accept();
+	}
+
+	/**
+	 * Generic method for mouse hover action.
+	 * 
+	 * @param element the WebElement passed in by the user
+	 */
+	public void mouseHover(WebElement element) {
+		Actions act = new Actions(driver);
+		act.moveToElement(this.explicitWait(element)).build().perform();
+	}
+
+	/** Generic method allow user to accept alert */
+	public void acceptAlert() {
+		driver.switchTo().alert().accept();
+	}
+
+	/** Generic method allow user to dismiss alert */
+	public void dismissAlert() {
+		driver.switchTo().alert().dismiss();
+	}
+
+	/** Generic method allow user to double click */
+	public void doubleClick(WebElement element) {
+		Actions actions = new Actions(driver);
+		actions.doubleClick(element).perform();
+	}
+
+	/** Wait until Loading Indicator display */
+	public void waitOnLoadingIndicator() {
+		WebDriverWait wait = new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.invisibilityOf(loadingIndicator));
+	}
+}
