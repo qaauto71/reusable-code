@@ -1,0 +1,58 @@
+public boolean listItems(String taskList) throws InterruptedException {
+              driver.findElement(By.xpath("//select[@class='input-select validationElement']")).click();
+              List<WebElement> list= driver.findElements(By.xpath("//select[@class='input-select validationElement']/option"));
+              boolean flag= false; 
+                           
+              int ListSize=list.size();
+              System.out.println(ListSize);
+              for(int i=0; i<ListSize; i++) {
+                     
+                     System.out.println(list.get(i).getText());
+                     if(list.get(i).getText()!=taskList) {
+                           System.out.println("list item not found");
+                           flag= true;
+                     }
+              }
+              return flag;
+   
+     }
+
+// ---------------------------------------------------------------------OR--------------------------------
+       
+       public void check(String taskList) {
+              Boolean found = false;
+
+              WebElement element = driver.findElement(By.xpath("//select[@class='input-select validationElement']"));
+              Select select = new Select(element);
+              List<WebElement> allOptions = select.getOptions();
+              for(int i=0; i<allOptions.size(); i++) {
+                  if(allOptions.get(i).getText().equals(taskList)) {
+                      found=true;
+                      break;
+                  }
+              }
+              if(found) {
+                  System.out.println("Value exists");
+              }
+       }
+       
+  // --------------------------------------------------------------------------------
+  
+  /**
+	 * This method verifies whether the Blog Title has been deleted from blog list
+	 * @param blogTitle
+	 * @return a boolean value
+	 */
+	public boolean verifyBlogDeleted(String blogTitle) {
+		boolean delete=true;
+		List<WebElement> blogList= driver.findElements(By.xpath("//div[contains(@class,'blog-item-title')]"));
+		for (int i = 0; i < blogList.size(); i++) {
+
+			if(blogList.get(i).getText().equalsIgnoreCase(blogTitle)) {
+				delete= false;
+				break;
+			}
+
+		}
+		return delete;
+	}
