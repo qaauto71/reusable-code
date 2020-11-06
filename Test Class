@@ -1,0 +1,225 @@
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.UnhandledAlertException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import com.aventstack.extentreports.Status;
+import gov.gnma.listeners.ExtentListener;
+import gov.gnma.utils.ExcelXLSReader;
+import gov.gnma.utils.GetLog4jXml;
+import gov.gnma.utils.GetScreenshot;
+
+public class UniversalLandingPage extends BaseTest {
+
+	@Test(priority=32, groups = { "functional test" }, dataProvider = "getUniversalLandingPageData")
+
+	public void universalLandingPage(String userName, String password, String expectedPageTitle, String industryNewsDropDown1, String expectedMortgageUrl,
+			String industryNewsDropDown2, String expectedHUDPressUrl)
+			throws InterruptedException, IOException {
+
+		System.out.println("User logs in with valid credentials and creates a new note");
+
+		try {
+			// Instantiate Page Objects
+
+			MyGinneMaeLandingPage mLandingPage = new MyGinneMaeLandingPage(driver);
+			LoginPage loginPage = new LoginPage(driver);
+			MyDashboardPage myDashboard = new MyDashboardPage(driver);	
+			IndustryNewsFeedPage newsFeedPage =new IndustryNewsFeedPage(driver);
+
+			//Log4j file configuration
+			DOMConfigurator.configure(GetLog4jXml.getLog4jFile());
+
+			// Login to the application as an Author of the Moderator Blog account
+			mLandingPage.clickLoginButton();
+			ExtentListener.test.log(Status.INFO, "Application is up and running.");
+
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			loginPage.logIn(userName, password);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			Thread.sleep(2000);
+
+			if (myDashboard.myDashboardIsVisible()) {
+				Thread.sleep(1000);
+				GetScreenshot.addStepWithScreenshot(driver, "User was able to login to the MGM Portal successfully.");
+			} else {
+				Thread.sleep(1000);
+				GetScreenshot.addFailureStepWithScreenshot(driver, "User was unable to login to the MGM Portal.");
+			}
+
+			//Click on MyDashboard tab for Industry News
+			myDashboard.clickOnaeMyDashboardTabForIndustryNews();
+			GetScreenshot.addStepWithScreenshot(driver, "User clicks on the MyDashboard tab for Industry News.");
+			Thread.sleep(2000);
+
+			//Scroll down the page until view all industry news link
+			myDashboard.scrollDownToViewIndustryNews(driver);
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of the page after scroll down.");
+			Thread.sleep(3000);
+
+			//Click on View All Industry News link
+			myDashboard.clickOnViewAllIndustryNewsLink();
+			Thread.sleep(2000);
+
+			//Verify user navigates to Industry News page
+			if(driver.getTitle().equalsIgnoreCase(expectedPageTitle)) {
+				ExtentListener.test.log(Status.PASS, "User verifies selecting the View Industry News  from the Landing Page,"
+						+ " the user navigates to the Industry News - RSS Feed Screen successfully.");
+				GetScreenshot.addStepWithScreenshot(driver, "User navigates to Industry News Page.");
+			}else {
+				ExtentListener.test.log(Status.FAIL, "User verifies selecting the View Industry News from the Landing Page,"
+						+ "the user does not navigate to the Industry News Screen.");
+			}
+			Thread.sleep(1000);
+
+			//Verify Page Page Title, Control/Edit Link
+			Assert.assertTrue(newsFeedPage.verifyNewsFeedPageTitle());
+			Assert.assertTrue(newsFeedPage.verifyAvailableFeedsDropDown());
+			newsFeedPage.clickOnAvailableFeedsDropDown();
+			Thread.sleep(2000);
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of available feeds dropdown list.");
+			newsFeedPage.clickOnAvailableFeedsDropDown();
+			Thread.sleep(2000);
+
+			Assert.assertTrue(newsFeedPage.verifyEditRSSFeedLink());
+			newsFeedPage.clickOnEditRSSFeedLink();
+			Thread.sleep(2000);
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of RSS Feed Edit link.");
+			newsFeedPage.clickOnIndustryNewsFeedCloseIcon();
+			ExtentListener.test.log(Status.PASS, "User verifies the Page Title, Edit control " + 
+					"and the user is able to expand and collapse the Control /Edit link.");
+
+			//Click on MyDashboard tab for Industry News
+			newsFeedPage.clickOnMyDashboardLinkForRSSFeed();
+			Thread.sleep(3000);
+
+			myDashboard.clickOnLinkEditRSSFeed();
+			Thread.sleep(2000);
+			myDashboard.selectRadioButtonHudPressRelease();
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of Industry News Feed popup.");
+			Thread.sleep(2000);
+			myDashboard.clickOnEditRSSFeedPopupSaveButton();
+			driver.navigate().refresh();
+			Thread.sleep(3000);
+
+			//Scroll down the page until view all industry news link
+			myDashboard.scrollDownToIndustryNewsPortlet(driver);
+			Thread.sleep(3000);
+
+			ExtentListener.test.log(Status.PASS, "User verifies AE landing page provides a RSS Feeds from the Ginnie Mae pre-approved websites successfully.");
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of the selected RSS Feed.");
+			driver.navigate().refresh();
+			Thread.sleep(4000);
+
+			myDashboard.scrollDownToActivityFeed(driver);
+			Thread.sleep(2000);
+			//Select the Feed source from existing dropdown list
+			myDashboard.clickOnSelectAvailableFeedsDropDown();
+			Thread.sleep(2000);
+			myDashboard.selectFeedFromDropDown(industryNewsDropDown1);
+			Thread.sleep(2000);
+
+			if(myDashboard.verifyMortgageBankAssociateLinkVisible() == true) {
+				ExtentListener.test.log(Status.PASS, "User verifies an informational message with links are displayed "
+						+ "once a source is selected from the existing drop down list");
+				GetScreenshot.addStepWithScreenshot(driver, "Screenshot of information message along with links.");
+
+			}
+
+			//Click on Mortgage Bankers Association link
+			myDashboard.clickOnMortgageBankAssociateLink();
+			Thread.sleep(2000);
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of External site warning popup.");
+
+			//Click on Yes button on the External Site warning popup
+			myDashboard.clickOnYesButtonMortgageBankExternalSite();
+
+			//Switching to Child Window and get the URL of Child Window
+			String parent_Window=driver.getWindowHandle();
+			String childWindowUrl= myDashboard.getParentChildWindowUrl();
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of Mortgage News Daily site.");
+
+			//Verify navigation to desired Mortgage News daily link
+			if (childWindowUrl.equalsIgnoreCase(expectedMortgageUrl)== true) {
+				ExtentListener.test.log(Status.PASS, "User verifies by clicking on pred defined RSS Feed,"
+						+ "it navigates to http://www.mortgagenewsdaily.com link successfully.");
+			} else {
+				ExtentListener.test.log(Status.FAIL, "User verifies by clicking on pred defined RSS Feed,"
+						+ "it does not navigate to to http://www.mortgagenewsdaily.com link.");
+			}
+			
+			Thread.sleep(3000);
+			//Switch back to Parent Window
+			driver.switchTo().window(parent_Window);
+			Thread.sleep(3000);
+			
+			//Select the Feed source from existing dropdown list
+			myDashboard.clickOnSelectAvailableFeedsDropDown();
+			Thread.sleep(3000);
+			myDashboard.selectFeedFromDropDown(industryNewsDropDown2);
+			Thread.sleep(2000);
+			
+			myDashboard.clickOnHudPressReleaseLink();
+			Thread.sleep(3000);
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of External site warning popup.");
+			
+			//Switching to Child Window and get the URL of Child Window
+			childWindowUrl= myDashboard.getParentChildWindowUrl();
+			GetScreenshot.addStepWithScreenshot(driver, "Screenshot of HUD Press site.");
+			Thread.sleep(3000);
+			
+			//Verify navigation to desired HUD link
+			if (childWindowUrl.equalsIgnoreCase(expectedHUDPressUrl)== true) {
+				ExtentListener.test.log(Status.PASS, "User verifies by clicking on pred defined RSS Feed,"
+						+ "it navigates to https://www.hud.gov link successfully.");
+			}else {
+				
+				ExtentListener.test.log(Status.FAIL, "User verifies by clicking on pred defined RSS Feed,"
+						+ "it does not navigate to to https://www.hud.gov link.");
+			}
+		
+			//Switch back to Parent Window
+			driver.switchTo().window(parent_Window);
+			Thread.sleep(2000);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+
+			// Logout of the application
+			MyDashboardPage myDashboard = new MyDashboardPage(driver);;
+			myDashboard.clickOnLogOutContainer();
+			myDashboard.clickOnLogOutButton();
+			Thread.sleep(2000);
+			GetScreenshot.addStepWithScreenshot(driver, "User has logged out of the application.");
+		}
+
+	}
+
+	@DataProvider
+	public String[][] getUniversalLandingPageData(ITestContext context) {
+
+		String testParam = context.getCurrentXmlTest().getParameter("UniversalLandingPageData");
+		String[][] notesData = ExcelXLSReader.get(testParam);
+		return notesData;
+
+	}
+
+}
