@@ -1,0 +1,204 @@
+public class PageMethodsPage extends BasePage{
+
+public boolean verifyLogoIsDisplayed() {
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		// Wait for element to be displayed.
+		WebElement logo = wait.until(ExpectedConditions.visibilityOf(element));
+		// Verify visibility of the web element.
+		return logo.isDisplayed();
+	} 
+
+
+public boolean verifyTheMarqueeBackgroundImageIsDisplayed() {
+		return marqueeBackgroundImage.isDisplayed();
+	}
+
+	/**
+	 * This method allow user to verify 'Hello' msg displayed on  page
+	 * 
+	 */
+	public boolean verifyHelloMsg() {
+		if (this.explicitWait(helloMsg).isDisplayed() == true) {
+			Log.info("Login successful");
+		} else {
+			Log.error("Login unsuccessful");
+		}
+
+		return this.explicitWait(helloMsg).isDisplayed() == true;
+
+	} 
+
+
+
+	/**
+	 * This method verifies whether Events tab is displayed
+	 * @return
+	 */
+	public boolean verifyEventsTabIsDisplayed() {
+		return this.explicitWait(eventsTab).isDisplayed();
+	}
+	//the explicitWait(element) method is called from BasePage which contains the method like this-
+	//public WebElement explicitWait(WebElement element) {
+	//	WebDriverWait wait = new WebDriverWait(driver, 75);
+	//	return wait.until(ExpectedConditions.visibilityOf(element));
+	// }
+
+	/**
+	 * This method scrolls down to element
+	 * @param driver
+	 */
+	public void scrollDownToNotesPortlet(WebDriver driver) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+
+	/**
+	 * This method counts total number of all the note titles 
+	 * @param driver
+	 * @return a string value counting total number of notes
+	 */
+	public String allNoteTitleCount(WebDriver driver) {
+
+		List<WebElement> list= driver.findElements(By.xpath("//div[@class='note-row']"));
+		int countNotes=0;
+
+		for(int i=0; i<list.size(); i++) {
+			System.out.println(list.get(i).getText());
+			countNotes++;
+		}
+
+		return String.valueOf(countNotes);
+	}
+
+	public void scrollToInboxTitle(WebDriver driver) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	/**
+	 * This method selects the value of To field dropdown in New Message form
+	 * @param receipient
+	 */
+	public void setToDropDownReceipientOption(String receipient) {
+		WebElement element= driver.findElement(By.xpath("//li[contains(text(),'"+receipient+"')]"));
+		element.click();
+
+	}
+
+	public void scrollPageDown(WebDriver driver) {
+		//((JavascriptExecutor)driver).executeScript.executeScript("scroll(0, 250);");    
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",scrollPageDown);
+
+	}
+
+	/**
+	 * This method selects future Due Date by using Right Arrow Key
+	 */
+
+	public void selectDueDate() {
+
+		dueDateField.sendKeys(Keys.ARROW_RIGHT);
+		dueDateField.sendKeys(Keys.ARROW_RIGHT);
+		dueDateField.sendKeys(Keys.ENTER);
+
+	}
+
+	/**
+	 * This method select the Due Date as Today's date
+	 */
+	public void selectCurrentReminderDate() {
+
+		reminderDueDateField.sendKeys(Keys.ARROW_RIGHT);
+		reminderDueDateField.sendKeys(Keys.ARROW_LEFT);
+		reminderDueDateField.sendKeys(Keys.ENTER);
+	}
+
+	/**
+	 * This method select a future date as a Reminder Date
+	 */
+	public void selectReminderDate() {
+
+		reminderDueDateField.sendKeys(Keys.ARROW_RIGHT);
+		reminderDueDateField.sendKeys(Keys.ENTER);
+	}
+
+	public String getTaskTitleFromTask() {
+		String getTaskTitle = taskTitle.getAttribute("value");
+		return getTaskTitle;
+	}
+
+	public void pressEnterKeyOnNotesConfirmation() {
+		confirmPopUp.sendKeys(Keys.ENTER);
+	}
+
+	/**
+	 * This method mouse hovers to Staff Directory Report link
+	 */
+	public void mouseHoverToStaffDirectoryReport() {
+
+		Actions action= new Actions(driver);
+		action.moveToElement(linkStaffDirectoryReport).build().perform();
+	}
+
+	public void scrollDownToElement(WebDriver driver) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	/**
+	 * This method switches from  Parent to Child Window
+	 * @return a Child Window URL as a String
+	 */
+	public String getParentChildWindowUrl() {
+		
+		// It will return the parent window name as a String
+		String parent_Window=driver.getWindowHandle();
+
+		// This will return the number of windows opened by WebDriver and will return Set of Strings
+		Set<String>s1=driver.getWindowHandles();
+
+		// Now we will iterate using Iterator
+		Iterator<String> I1= s1.iterator();
+		while(I1.hasNext())
+		{ 
+			String child_window=I1.next();
+			
+			// Comparing if parent window is not equal to child window 			 
+			if(!parent_Window.equals(child_window))
+			{
+				String childUrl= driver.switchTo().window(child_window).getCurrentUrl();
+				System.out.println("The URL of Child Window is: "+ childUrl);
+			} 
+		}//end of while loop
+		return driver.getCurrentUrl();
+	}
+	
+	
+	/**
+	 * This method verifies whether Activity Feed is visible 
+	 * @return
+	 */
+	public boolean verifyActivityFeedPortletVisible() {
+		this.mouseHover(activityFeedPortlet);
+		return activityFeedPortlet.isDisplayed();
+	}
+/*In the BasePage-
+public void mouseHover(WebElement element) {
+		Actions act = new Actions(driver);
+		act.moveToElement(this.explicitWait(element)).build().perform();
+	}
+And This method is coming from the bottom method in the same page class-
+
+public WebElement explicitWait(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, 75);
+		return wait.until(ExpectedConditions.visibilityOf(element));
+	}
+*/
+
+	/**This method allow user to extract pool number from message on page */
+	public String poolNumberFromMsg() {
+		String s= this.explicitWait(messageText).getText();
+		Log.info("Get pool number from msg on  page");
+		return s.substring(5, 11);
+	}
+
+
+}
