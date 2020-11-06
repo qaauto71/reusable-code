@@ -1,0 +1,58 @@
+public class LoginPage extends BasePage{
+
+/*********	Web Elements *********//
+	
+	//Page Elements
+	@FindBy(id = "username")
+	private WebElement usernameField;
+
+//*********	Constructor	*********//
+	
+	public LoginPage(WebDriver newDriver) {
+		super(newDriver);
+		PageFactory.initElements(newDriver, this);
+		driver = newDriver;
+	}
+		
+	//********* Page Methods *********//
+
+public void setUserName(String userName) {
+		this.explicitWait(usernameField).clear();
+		this.explicitWait(usernameField).sendKeys(userName);
+	}
+
+public void setUserPassword(String userPwd) {
+		this.explicitWait(passwordField).clear();
+		this.explicitWait(passwordField).sendKeys(userPwd);
+	}
+
+public void clickLogin() {
+		this.clickOnAnElement(loginButton);
+	}
+
+public void logIn(String userName, String userPwd) {
+		//usernameField.sendKeys(userName);
+		this.setUserName(userName);
+		Log.info("User enter username");
+		//passwordField.sendKeys(userPwd);
+		this.setUserPassword(userPwd);
+		Log.info("User enter password");
+		//loginButton.click();
+		this.clickLogin();
+		Log.info("User click on Logon button");
+	}
+
+public void clickOnLockIcon() {
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.elementToBeClickable(this.explicitWait(lockManu))).click();
+		Log.info("Click on Lock logo");
+	}
+
+public void clickLogout() {
+		WebDriverWait wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.elementToBeClickable(this.explicitWait(logOut))).click();
+		Log.info("Log out");
+
+	}
+
+}
