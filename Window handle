@@ -1,0 +1,72 @@
+// Get Parent window handle
+ String winHandleBefore = _driver.getWindowHandle();
+ for (String winHandle : _driver.getWindowHandles()) {
+   // Switch to child window
+   driver.switchTo().window(winHandle);
+ }
+
+// Do some operation on child window and get child window handle.
+String winHandleAfter = driver.getWindowHandle();
+
+//switch to child window of 1st child window.
+for(String winChildHandle : _driver.getWindowHandles()) {
+  // Switch to child window of the 1st child window.
+  if(!winChildHandle.equals(winHandleBefore) 
+  && !winChildHandle.equals(winHandleAfter)) {
+    driver.switchTo().window(winChildHandle);
+   }
+ }
+
+// Do some operation on child window of 1st child window.
+// to close the child window of 1st child window.
+driver.close();
+// to close the child window.
+driver.close();
+
+// to switch to parent window.
+driver.switchto.window(winHandleBefore);
+
+//-------------------------------------------------------------------------
+
+String Parent_Window = driver.getWindowHandle();    
+for (String Child_Window : driver.getWindowHandles())  
+ {  
+ driver.switchTo().window(Child_Window);  
+ //Perform operation on child window 
+ driver.close();
+ } 
+//Switching back to Parent Window  
+ driver.switchTo().window(Parent_Window); 
+ 
+//------------------------------------------------------------------
+
+// It will return the parent window name as a String
+String parent_Window=driver.getWindowHandle();
+
+// This will return the number of windows opened by Webdriver and will return Set of Strings
+	Set<String> s1=driver.getWindowHandles();
+
+// Now we will iterate using Iterator
+	Iterator<String> I1= s1.iterator();
+
+	while(I1.hasNext())
+			{ 
+				String child_window=I1.next();
+
+				// Comparing if parent window is not equal to child window 			 
+				if(!parent_Window.equals(child_window))
+				{
+					driver.switchTo().window(child_window); 
+					Thread.sleep(3000);
+					System.out.println("The title of Child Window is: "+ driver.switchTo().window(child_window).getTitle());
+					//driver.manage().window().maximize();
+					Thread.sleep(6000);
+					ExtentListener.test.log(Status.PASS, "User is able to see User Directory Screen successfully.");
+					GetScreenshot.addStepWithScreenshot(driver, "Screenshot of New Entry Window page.");
+				} 
+			} // end of while Loop
+	//close child window
+	driver.close();
+	//switch to parent window
+	driver.switchTo().window(parent_Window);
+
