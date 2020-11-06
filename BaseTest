@@ -1,0 +1,79 @@
+public class BaseTest {
+
+	public static WebDriver driver;
+
+	@BeforeMethod
+	@Parameters({ "Browser", "qa_url", "DriverDirectory" })
+	public void setUp(String testBrowser, String testURL, String DriverDirectory, ITestContext context)
+			throws IOException {
+		System.out.println("Launching Browser");
+		driver = DriverFactory.open(testBrowser, DriverDirectory);
+		if (driver !=null) {
+			System.out.println("Driver initialized");
+		}else {
+			System.out.println("Driver initialization failed");
+		}
+		driver.get(testURL);
+		context.setAttribute("WebDriver", driver);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+		
+	}
+	
+	
+
+	@AfterMethod
+	@Parameters({ "Env" })
+	public void tearDown(String Env, ITestResult result) throws IOException {
+		if (!result.isSuccess()) {
+			try {
+				// driver.findElement(By.xpath("//*[@id='account-menu']/span/span[contains(@class,'hidden-sm')]")).click();
+				// driver.findElement(By.xpath("//span[contains(text(),'Sign out')]")).click();
+
+				if (Env.equalsIgnoreCase("qa")) {
+					//driver.get(clearsessionqaurl);
+				}
+
+				if (Env.equalsIgnoreCase("dev")) {
+				//	driver.get(clearsessiondevurl);
+				}
+
+				if (Env.equalsIgnoreCase("uat")) {
+					//driver.get(clearsessionuaturl);
+				}
+				
+				driver.quit();
+			} catch (Exception e) {
+				System.out.println(e);
+				if (Env.equalsIgnoreCase("qa")) {
+					//driver.get(clearsessionqaurl);
+				}
+
+				if (Env.equalsIgnoreCase("dev")) {
+					//driver.get(clearsessiondevurl);
+				}
+
+				if (Env.equalsIgnoreCase("uat")) {
+					//driver.get(clearsessionuaturl);
+				}
+				
+				driver.quit();
+			}
+		} else {
+			if (Env.equalsIgnoreCase("qa")) {
+				//driver.get(clearsessionqaurl);
+			}
+
+			if (Env.equalsIgnoreCase("dev")) {
+			//	driver.get(clearsessiondevurl);
+			}
+
+			if (Env.equalsIgnoreCase("uat")) {
+			//	driver.get(clearsessionuaturl);
+			}
+			
+			driver.quit();
+		};
+		
+		driver.quit();
+	}
