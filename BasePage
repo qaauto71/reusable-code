@@ -384,10 +384,7 @@ private WebElement loadingIndicator;
 		} catch (Exception e) {
 			System.out.println("alert not displayed");
 		}
-	}
 
-	// Author: Raiyan Rahman
-	// This method was added to this page class on 06/17/2019.
 
 	public void refreshPage(WebDriver driver) {
 		driver.navigate().refresh();
